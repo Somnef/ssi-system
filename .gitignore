@@ -1,0 +1,19 @@
+# Agent data
+agent_envs/
+agent_dids/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Node / Frontend stuff
+node_modules/
+dist/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS metadata
+.DS_Store

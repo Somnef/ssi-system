@@ -1,0 +1,389 @@
+"--admin"
+-> "Specify the host and port on which to run the administrative server. If not provided, no admin server is made available."
+
+"--admin-api-key"
+-> "Protect all admin endpoints with the provided API key. API clients (e.g. the controller) must pass the key in the HTTP header using 'X-API-Key: <api key>'. Either this parameter or the '--admin-insecure-mode' parameter MUST be specified."
+
+"--admin-insecure-mode"
+-> "Run the admin web server in insecure mode. DO NOT USE FOR PRODUCTION DEPLOYMENTS. The admin server will be publicly available to anyone who has access to the interface. Either this parameter or the '--api-key' parameter MUST be specified."
+
+"--no-receive-invites"
+-> "Prevents an agent from receiving invites by removing the '/connections/receive-invite' route from the administrative interface. Default: false."
+
+"--help-link"
+-> "A URL to an administrative interface help web page that a controller user interface can get from the agent and provide as a link to users."
+
+"--webhook-url"
+-> "Send webhooks containing internal state changes to the specified URL. Optional API key to be passed in the request body can be appended using a hash separator [#]. This is useful for a controller to monitor agent events and respond to those events using the admin API. If not specified, webhooks are not published by the agent."
+
+"--admin-client-max-request-size"
+-> "Maximum client request size to admin server, in megabytes: default 1"
+
+"--debug"
+-> "Enables a remote debugging service that can be accessed using the Debug Adapter Protocol (supported by Visual Studio Code). The framework will wait for the debugger to connect at start-up. Default: false."
+
+"--debug-seed"
+-> "Specify the debug seed to use."
+
+"--debug-connections"
+-> "Enable additional logging around connections. Default: false."
+
+"--debug-credentials"
+-> "Enable additional logging around credential exchanges. Default: false."
+
+"--debug-presentations"
+-> "Enable additional logging around presentation exchanges. Default: false."
+
+"--debug-webhooks"
+-> "Emit protocol state object as webhook. Default: false.")
+
+"--invite"
+-> "After startup, generate and print a new out-of-band connection invitation URL. Default: false."
+
+"--invite-label"
+-> "Specify the label of the generated invitation."
+
+"--invite-multi-use"
+-> "Flag specifying the generated invite should be multi-use."
+
+"--invite-public"
+-> "Flag specifying the generated invite should be public."
+
+"--invite-metadata-json"
+-> "Add metadata json to invitation created with --invite argument."
+
+"--test-suite-endpoint"
+-> "URL endpoint for sending messages to the test suite agent."
+
+"--auto-accept-invites"
+-> "Automatically accept invites without firing a webhook event or waiting for an admin request. Default: false."
+
+"--auto-accept-requests"
+-> "Automatically accept connection requests without firing a webhook event or waiting for an admin request. Default: false."
+
+"--auto-respond-messages"
+-> "Automatically respond to basic messages indicating the message was received. Default: false."
+
+"--auto-respond-credential-proposal"
+-> "Auto-respond to credential proposals with corresponding credential offers"
+
+"--auto-respond-credential-offer"
+-> "Automatically respond to Indy credential offers with a credential request. Default: false"
+
+"--auto-respond-credential-request"
+-> "Auto-respond to credential requests with corresponding credentials"
+
+"--auto-respond-presentation-proposal"
+-> "Auto-respond to presentation proposals with corresponding presentation requests"
+
+"--auto-respond-presentation-request"
+-> "Automatically respond to Indy presentation requests with a constructed presentation if a corresponding credential can be retrieved for every referent in the presentation request. Default: false."
+
+"--auto-store-credential"
+-> "Automatically store an issued credential upon receipt. Default: false."
+
+"--auto-verify-presentation"
+-> "Automatically verify a presentation when it is received. Default: false."
+
+"--auto-disclose-features"
+-> "Specifies that the agent will proactively/auto disclose protocols and goal-codes features on connection creation [RFC0557]."
+
+"--disclose-features-list"
+-> "Load YAML file path that specifies which features to disclose."
+
+"--arg-file"
+-> "Load aca-py arguments from the specified file.  Note that this file *must* be in YAML format."
+
+"--plugin"
+-> "Load <module> as external plugin module. Multiple instances of this parameter can be specified."
+
+"--block-plugin"
+-> "Block <module> plugin module from loading. Multiple instances of this parameter can be specified."
+
+"--plugin-config"
+-> "Load YAML file path that defines external plugin configuration."
+
+"--plugin-config-value"
+-> "Set an arbitrary plugin configuration option in the format KEY=VALUE. Use dots in KEY to set deeply nested values, as in "'"a.b.c=value". VALUE is parsed as yaml.'
+
+"--storage-type"
+-> "DEPRECATED: This option is ignored. Specifies the type of storage provider to use for the internal storage engine. This storage interface is used to store internal state. Supported internal storage types are 'basic' (memory) and 'indy'.  The default (if not specified) is 'indy' if the wallet type is set to 'indy', otherwise 'basic'."
+
+"--endpoint"
+-> "Specifies the endpoints to put into DIDDocs to inform other agents of where they should send messages destined for this agent. Each endpoint could be one of the specified inbound transports for this agent, or the endpoint could be that of another agent (e.g. 'https://example.com/agent-endpoint')
+
+"--profile-endpoint"
+-> "Specifies the profile endpoint for the (public) DID."
+
+"--universal-resolver"
+-> "Enable resolution from a universal resolver."
+
+"--universal-resolver-regex"
+-> "Regex matching DIDs to resolve using the unversal resolver. Multiple can be specified. Defaults to a regex matching all DIDs resolvable by universal resolver instance."
+
+"--universal-resolver-bearer-token"
+-> "Bearer token if universal resolver instance requires authentication.",  # noqa: E501
+
+"--tails-server-base-url"
+-> "Sets the base url of the tails server in use."
+
+"--tails-server-upload-url"
+-> "Sets the base url of the tails server for upload, defaulting to the tails server base url."
+
+"--notify-revocation"
+-> "Specifies that aca-py will notify credential recipients when revoking a credential it issued."
+
+"--monitor-revocation-notification"
+-> "Specifies that aca-py will emit webhooks on notification of revocation received."
+
+"--anoncreds-legacy-revocation"
+-> "Specify the handling of older proofs of non-revocation for anoncreds credentials. Values are 'accept' or 'reject'."
+
+"--ledger-pool-name"
+-> "Specifies the name of the indy pool to be opened. This is useful if you have multiple pool configurations."
+
+"--genesis-transactions"
+-> "Specifies the genesis transactions to use to connect to a Hyperledger Indy ledger. The transactions are provided as string "'of JSON e.g. \'{"reqSignature":{},"txn":{"data":{"d... <snip>}}}\''
+
+"--genesis-file"
+-> "Specifies a local file from which to read the genesis transactions."
+
+"--genesis-url"
+-> "Specifies the url from which to download the genesis transactions. For example, if you are using 'von-network', the URL might be 'http://localhost:9000/genesis'. Genesis transactions URLs are available for the Sovrin test/main networks."
+
+"--no-ledger"
+-> "Specifies that aca-py will run with no ledger configured. This must be set if running in no-ledger mode.  Overrides any specified ledger or genesis configurations.  Default: false."
+
+"--read-only-ledger"
+-> "Sets ledger to read-only to prevent updates. Default: false."
+
+"--ledger-keepalive"
+-> "Specifies how many seconds to keep the ledger open. Default: 5"
+
+"--ledger-socks-proxy"
+-> "Specifies the socks proxy (NOT http proxy) hostname and port in format 'hostname:port'. This is an optional parameter to be passed to ledger pool configuration and ZMQ in case if aca-py is running in a corporate/private network behind a corporate proxy and will connect to the public (outside of corporate network) ledger pool"
+
+"--genesis-transactions-list"
+-> "Load YAML configuration for connecting to multiple HyperLedger Indy ledgers."
+
+"--accept-taa"
+-> "Specify the acceptance mechanism and taa version for which to accept the transaction author agreement. If not provided, the TAA must be accepted through the TTY or the admin API."
+
+"--log-config"
+-> "Specifies a custom logging configuration file"
+
+"--log-file"
+-> "--log-file enables writing of logs to file, if a value is provided then it uses that as log file location, otherwise the default location in log config file is used."
+
+"--log-level"
+-> "Specifies a custom logging level as one of: ('debug', 'info', 'warning', 'error', 'critical')
+
+"--auto-ping-connection"
+-> "Automatically send a trust ping immediately after a connection response is accepted. Some agents require this before marking a connection as 'active'. Default: false."
+
+"--auto-accept-intro-invitation-requests"
+-> "Automatically accept introduction invitations. Default: false."
+
+"--invite-base-url"
+-> "Base URL to use when formatting connection invitations in URL format."
+
+"--monitor-ping"
+-> "Send a webhook when a ping is sent or received."
+
+"--monitor-forward"
+-> "Send a webhook when a forward is received."
+
+"--public-invites"
+-> "Send invitations out using the public DID for the agent, and receive connection requests solicited by invitations which use the public DID. Default: false."
+
+"--requests-through-public-did"
+-> "Allow agent to receive unsolicited connection requests, using the public DID for the agent. Default: false."
+
+"--timing"
+-> "Include timing information in response messages."
+
+"--timing-log"
+-> "Write timing information to a given log file."
+
+"--trace"
+-> "Generate tracing events."
+
+"--trace-target"
+-> 'Target for trace events ("log", "message", or http endpoint)
+
+"--trace-tag"
+-> "Tag to be included when logging events."
+
+"--trace-label"
+-> "Label (agent name) used logging events."
+
+"--preserve-exchange-records"
+-> "Keep credential and presentation exchange records after exchange has completed."
+
+"--emit-new-didcomm-prefix"
+-> "Emit protocol messages with new DIDComm prefix; i.e., 'https://didcomm.org/' instead of (default)
+
+"--emit-new-didcomm-mime-type"
+-> "Send packed agent messages with the DIDComm MIME type as of RFC 0044; i.e., 'application/didcomm-envelope-enc' instead of 'application/ssi-agent-wire'. Forced to `true` as the old MIME type must never be used."
+
+"--exch-use-unencrypted-tags"
+-> "Store tags for exchange protocols (credential and presentation) using unencrypted rather than encrypted tags"
+
+"--experimental-didcomm-v2"
+-> "Enable experimental DIDComm V2 support."
+
+"--auto-provision"
+-> "If the requested profile does not exist, initialize it with the given parameters."
+
+"--no-transport"
+-> "Specifies that aca-py will run with no transport configured. This must be set if running in no-transport mode.  Overrides any specified transport or endpoint configurations.  Either this parameter or the '--endpoint' parameter MUST be specified. Default: false."
+
+"--inbound-transport"
+-> "REQUIRED. Defines the inbound transport(s) on which the agent listens for receiving messages from other agents. This parameter can be specified multiple times to create multiple interfaces. Built-in inbound transport types include 'http' and 'ws'. However, other transports can be loaded by specifying an absolute module path."
+
+"--outbound-transport"
+-> "REQUIRED. Defines the outbound transport(s) on which the agent will send outgoing messages to other agents. This parameter can be passed multiple times to supoort multiple transport types. Supported outbound transport types are 'http' and 'ws'."
+
+"--label"
+-> "Specifies the label for this agent. This label is publicized (self-attested) to other agents as part of forming a connection."
+
+"--image-url"
+-> "Specifies the image url for this agent. This image url is publicized (self-attested) to other agents as part of forming a connection."
+
+"--max-message-size"
+-> "Set the maximum size in bytes for inbound agent messages."
+
+"--enable-undelivered-queue"
+-> "Enable the outbound undelivered queue that enables this agent to hold messages for delivery to agents without an endpoint. This option will require additional memory to store messages in the queue."
+
+"--max-outbound-retry"
+-> "Set the maximum retry number for undelivered outbound messages. Increasing this number might cause to increase the accumulated messages in message queue. Default value is 4."
+
+"--ws-heartbeat-interval"
+-> "When using Websocket Inbound Transport, send WS pings every <interval> seconds."
+
+"--ws-timeout-interval"
+-> "When using Websocket Inbound Transport, timeout the WS connection after <interval> seconds without a heartbeat ping."
+
+"--mediator-invitation"
+-> "Connect to mediator through provided invitation and send mediation request and set as default mediator."
+
+"--open-mediation"
+-> "Enables automatic granting of mediation. After establishing a connection, if enabled, an agent may request message mediation and be granted it automatically, which will allow the mediator to forward messages on behalf of the recipient. See aries-rfc:0211."
+
+"--default-mediator-id"
+-> "Set the default mediator by ID"
+
+"--clear-default-mediator"
+-> "Clear the stored default mediator."
+
+"--seed"
+-> "Specifies the seed to use for the creation of a public DID for the agent to use with a Hyperledger Indy ledger, or a local ('--wallet-local-did')
+
+"--wallet-local-did"
+-> "If this parameter is set, provisions the wallet with a local DID from the '--seed' parameter, instead of a public DID to use with a Hyperledger Indy ledger."
+
+"--wallet-allow-insecure-seed"
+-> "If this parameter is set, allows to use a custom seed to create a local DID"
+
+"--wallet-key"
+-> "Specifies the master key value to use to open the wallet."
+
+"--wallet-rekey"
+-> "Specifies a new master key value to which to rotate and to open the wallet next time."
+
+"--wallet-name"
+-> "Specifies the wallet name to be used by the agent. This is useful if your deployment has multiple wallets."
+
+"--wallet-type"
+-> "Specifies the type of wallet provider to use. Supported internal storage types are 'askar' and 'askar-anoncreds'.The default (if not specified) is 'askar'."
+
+"--wallet-storage-type"
+-> "Specifies the type of wallet backend to use. Supported internal storage types are 'default' (sqlite), and 'postgres_storage'.  The default, if not specified, is 'default'."
+
+"--wallet-test"
+-> "Using this option will create a wallet with an in-memory askar wallet storage with a random name. This is useful for testing purposes. The data will not be persisted after the agent is stopped. The default is False. "
+
+"--wallet-storage-config"
+-> "Specifies the storage configuration to use for the wallet. This is required if you are for using 'postgres_storage' wallet "'storage type. For example, \'{"url":"localhost:5432"}\'.'
+
+"--wallet-key-derivation-method"
+-> "Specifies the key derivation method used for wallet encryption.")
+
+"--wallet-rekey-derivation-method"
+-> "Specifies the key derivation method used for the replacementrekey encryption."
+
+"--wallet-storage-creds"
+-> "Specifies the storage credentials to use for the wallet. This is required if you are for using 'postgres_storage' wallet "'For example, \'{"account":"postgres","password": ''"mysecretpassword","admin_account":"postgres", ''"admin_password":"mysecretpassword"}\'.'"NOTE: admin_user must have the CREATEDB role or else initialization will fail."
+
+"--replace-public-did"
+-> "If this parameter is set and an agent already has a public DID, and the '--seed' parameter specifies a new DID, the agent will use the new DID in place of the existing DID. Default: false."
+
+"--recreate-wallet"
+-> "If an existing wallet exists with the same name, remove and recreate it during provisioning."
+
+"--multitenant"
+-> "Enable multitenant mode."
+
+"--jwt-secret"
+-> "Specify the secret to be used for Json Web Token (JWT) creation and verification. The JWTs are used to authenticate and authorize multitenant wallets."
+
+"--multitenant-admin"
+-> "Specify whether to enable the multitenant admin api."
+
+"--multitenancy-config"
+-> "Specify multitenancy configuration in key=value pairs. "'For example: "wallet_type=single-wallet-askar wallet_name=wallet-name" '"Possible values: wallet_name, wallet_key, cache_size, "'key_derivation_method. "wallet_name" is only used when ''"wallet_type" is "single-wallet-askar"'
+
+"--base-wallet-routes"
+-> "Patterns matching admin routes that should be permitted for base wallet. The base wallet is preconfigured to have access to essential endpoints. This argument should be used sparingly."
+
+"--endorser-protocol-role"
+-> "Specify the role ('author' or 'endorser') which this agent will participate. Authors will request transaction endorement from an Endorser. Endorsers will endorse transactions from Authors, and may write their own transactions to the ledger. If no role (or 'none')
+
+"--endorser-invitation"
+-> "For transaction Authors, specify the invitation used to connect to the Endorser agent who will be endorsing transactions. Note this is a multi-use invitation created by the Endorser agent."
+
+"--endorser-public-did"
+-> "For transaction Authors, specify the public DID of the Endorser agent who will be endorsing transactions."
+
+"--endorser-endorse-with-did"
+-> "For transaction Endorsers, specify the DID to use to endorse transactions.  The default (if not specified)
+
+"--endorser-alias"
+-> "For transaction Authors, specify the alias of the Endorser connection that will be used to endorse transactions."
+
+"--auto-request-endorsement"
+-> "For Authors, specify whether to automatically request endorsement for all transactions. (If not specified, the controller  must invoke the request endorse operation for each transaction.)
+
+"--auto-endorse-transactions"
+-> "For Endorsers, specify whether to automatically endorse any received endorsement requests. (If not specified, the controller  must invoke the endorsement operation for each transaction.)
+
+"--auto-write-transactions"
+-> "For Authors, specify whether to automatically write any endorsed transactions. (If not specified, the controller  must invoke the write transaction operation for each transaction.)
+
+"--auto-create-revocation-transactions"
+-> "For Authors, specify whether to automatically create transactions for a cred def's revocation registry. (If not specified, the controller must invoke the endpoints required to create the revocation registry and assign to the cred def.)
+
+"--auto-promote-author-did"
+-> "For Authors, specify whether to automatically promote a DID to the wallet public DID after writing to the ledger."
+
+"--upgrade-config-path"
+-> "YAML file path that specifies config to handle upgrade changes.Default: ./acapy_agent/commands/default_version_upgrade_config.yml"
+
+"--from-version"
+-> "Specify which ACA-Py version to upgrade from, this version should be supported/included in the --upgrade-config file."
+
+"--force-upgrade"
+-> "Forces the '—from-version' argument to override the version retrieved from secure storage when calculating upgrades to be run."
+
+"--named-tag"
+-> "Runs upgrade steps associated with tags provided in the config"
+
+"--upgrade-all-subwallets"
+-> "Apply upgrade to all subwallets and the base wallet"
+
+"--upgrade-subwallet"
+-> "Apply upgrade to specified subwallets (identified by wallet id) and the base wallet"
+
+"--upgrade-page-size"
+-> "Specify page/batch size to process BaseRecords, this provides a way to prevent out-of-memory issues."

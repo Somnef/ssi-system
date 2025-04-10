@@ -1,0 +1,170 @@
+# === University Agent ===
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acapy-university
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acapy-university
+  template:
+    metadata:
+      labels:
+        app: acapy-university
+    spec:
+      containers:
+        - name: aca-py
+          image: ghcr.io/openwallet-foundation/aries-cloudagent-python:py3.9-indy-1.16.0-0.12.6
+          args: [
+            "start",
+            "--inbound-transport", "http", "0.0.0.0", "8020",
+            "--outbound-transport", "http",
+            "--admin", "0.0.0.0", "8031",
+            "--admin-insecure-mode",
+            "--log-level", "info",
+            "--wallet-type", "askar",
+            "--wallet-name", "university-wallet",
+            "--wallet-key", "key123",
+            "--auto-provision",
+            "--genesis-url", "http://greenlight.bcovrin.vonx.io/genesis",
+            "--endpoint", "http://acapy-university.local:8020",
+            "--label", "University"
+          ]
+          ports:
+            - containerPort: 8020
+            - containerPort: 8031
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acapy-university-service
+spec:
+  selector:
+    app: acapy-university
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: http
+      port: 8020
+      targetPort: 8020
+      nodePort: 30020
+    - protocol: TCP
+      name: admin
+      port: 8031
+      targetPort: 8031
+      nodePort: 30031
+---
+# === Student Agent ===
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acapy-student
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acapy-student
+  template:
+    metadata:
+      labels:
+        app: acapy-student
+    spec:
+      containers:
+        - name: aca-py
+          image: ghcr.io/openwallet-foundation/aries-cloudagent-python:py3.9-indy-1.16.0-0.12.6
+          args: [
+            "start",
+            "--inbound-transport", "http", "0.0.0.0", "8021",
+            "--outbound-transport", "http",
+            "--admin", "0.0.0.0", "8032",
+            "--admin-insecure-mode",
+            "--log-level", "info",
+            "--wallet-type", "askar",
+            "--wallet-name", "student-wallet",
+            "--wallet-key", "key123",
+            "--auto-provision",
+            "--genesis-url", "http://greenlight.bcovrin.vonx.io/genesis",
+            "--endpoint", "http://acapy-student.local:8021",
+            "--label", "Student"
+          ]
+          ports:
+            - containerPort: 8021
+            - containerPort: 8032
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acapy-student-service
+spec:
+  selector:
+    app: acapy-student
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: http
+      port: 8021
+      targetPort: 8021
+      nodePort: 30021
+    - protocol: TCP
+      name: admin
+      port: 8032
+      targetPort: 8032
+      nodePort: 30032
+---
+# === Employer Agent ===
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acapy-employer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acapy-employer
+  template:
+    metadata:
+      labels:
+        app: acapy-employer
+    spec:
+      containers:
+        - name: aca-py
+          image: ghcr.io/openwallet-foundation/aries-cloudagent-python:py3.9-indy-1.16.0-0.12.6
+          args: [
+            "start",
+            "--inbound-transport", "http", "0.0.0.0", "8022",
+            "--outbound-transport", "http",
+            "--admin", "0.0.0.0", "8033",
+            "--admin-insecure-mode",
+            "--log-level", "info",
+            "--wallet-type", "askar",
+            "--wallet-name", "employer-wallet",
+            "--wallet-key", "key123",
+            "--auto-provision",
+            "--genesis-url", "http://greenlight.bcovrin.vonx.io/genesis",
+            "--endpoint", "http://acapy-employer.local:8022",
+            "--label", "Employer"
+          ]
+          ports:
+            - containerPort: 8022
+            - containerPort: 8033
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acapy-employer-service
+spec:
+  selector:
+    app: acapy-employer
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: http
+      port: 8022
+      targetPort: 8022
+      nodePort: 30022
+    - protocol: TCP
+      name: admin
+      port: 8033
+      targetPort: 8033
+      nodePort: 30033
