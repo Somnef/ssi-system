@@ -3,6 +3,8 @@
 # ACA-Py Docker Agent Launcher Script
 # Usage: ./spawn_agent.sh <agent_name> <http_port> <admin_port>
 
+SCRIPT_DIR="$(dirname "$(realpath "$0")")"
+
 # Check if a port is in use
 check_port_in_use() {
   PORT=$1
@@ -29,7 +31,7 @@ WALLET_KEY="key_${AGENT_NAME}"
 GENESIS_URL="http://greenlight.bcovrin.vonx.io/genesis"
 
 # Create directory for env files and dids
-mkdir -p agent_envs agent_dids
+mkdir -p "$SCRIPT_DIR/agent_envs" "$SCRIPT_DIR/agent_dids"
 
 # Check if HTTP_PORT is already in use
 if check_port_in_use $AGENT_HTTP_PORT ; then
@@ -50,7 +52,7 @@ if docker ps -a --format '{{.Names}}' | grep -wq "$AGENT_NAME"; then
 fi
 
 # Save ports to individual agent .env file
-ENV_FILE="agent_envs/${AGENT_NAME}.env"
+ENV_FILE="$SCRIPT_DIR/agent_envs/${AGENT_NAME}.env"
 echo "AGENT_HTTP_PORT=$AGENT_HTTP_PORT" > "$ENV_FILE"
 echo "AGENT_ADMIN_PORT=$AGENT_ADMIN_PORT" >> "$ENV_FILE"
 
@@ -83,7 +85,7 @@ done
 
 echo "Agent is ready. Creating new DID..."
 
-DID_FILE="agent_dids/${AGENT_NAME}_did.json"
+DID_FILE="$SCRIPT_DIR/agent_dids/${AGENT_NAME}_did.json"
 
 if [ -f "$DID_FILE" ]; then
     echo "/!\ WARNING /!\ DID file already exists for $AGENT_NAME: $DID_FILE"

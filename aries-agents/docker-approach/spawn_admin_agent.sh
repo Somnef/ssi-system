@@ -3,6 +3,7 @@
 # Special script to spawn the admin agent and create its DID
 # Usage: ./spawn_admin_agent.sh <admin_agent_admin_port>
 
+
 # Check if a port is in use
 check_port_in_use() {
   PORT=$1

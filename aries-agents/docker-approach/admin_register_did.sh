@@ -55,7 +55,7 @@ VERKEY=$(echo "$RESPONSE" | pcregrep -o1 '"verkey": "(.*?)",')
 
 # Register DID using admin agent
 echo -e "\nRegistering DID on ledger..."
-curl -s -X POST "http://localhost:$ADMIN_AGENT_ADMIN_PORT/ledger/register-nym?did=$DID&verkey=$VERKEY"
+curl -s -X POST "http://localhost:$ADMIN_AGENT_ADMIN_PORT/ledger/register-nym?did=$DID&verkey=$VERKEY&alias=somnef-$AGENT_NAME"
 
 # Assign DID as public
 echo -e "\nAssigning public DID..."
