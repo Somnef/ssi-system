@@ -1,6 +1,7 @@
 # Agent data
 agent_envs/
 agent_dids/
+agent_wallets/
 
 # Logs and temporary files
 *.log
@@ -17,3 +18,8 @@ __pycache__/
 
 # OS metadata
 .DS_Store
+
+# Backend config
+backend/config.py
+
+backend/uploads
