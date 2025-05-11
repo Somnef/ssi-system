@@ -59,8 +59,8 @@ fi
 
 # Save admin agent ports to env file
 ENV_FILE="$SCRIPT_DIR/agent_envs/${ADMIN_AGENT_NAME}.env"
-echo "HTTP_PORT=$ADMIN_AGENT_HTTP_PORT" >"$ENV_FILE"
-echo "ADMIN_PORT=$ADMIN_AGENT_ADMIN_PORT" >>"$ENV_FILE"
+echo "AGENT_HTTP_PORT=$ADMIN_AGENT_HTTP_PORT" >"$ENV_FILE"
+echo "AGENT_ADMIN_PORT=$ADMIN_AGENT_ADMIN_PORT" >>"$ENV_FILE"
 
 IMAGE_NAME="ghcr.io/openwallet-foundation/acapy-agent:py3.12-nightly-2025-05-08"
 
