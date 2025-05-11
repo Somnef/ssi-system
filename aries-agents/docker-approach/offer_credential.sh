@@ -61,10 +61,10 @@ RESPONSE=$(curl -s -X POST "http://localhost:$PORT_ISSUER/issue-credential-2.0/s
     "credential_preview": {
       "@type": "issue-credential/2.0/credential-preview",
       "attributes": [
-        { "name": "first_name", "value": "Moncef" },
+        { "name": "first_name", "value": "Ahmed" },
         { "name": "last_name", "value": "Bousselat" },
-        { "name": "degree", "value": "Master in Cloud & AI" },
-        { "name": "year", "value": "2025" }
+        { "name": "degree", "value": "Master in Data Science" },
+        { "name": "year", "value": "2023" }
       ]
     },
     "auto_remove": true,

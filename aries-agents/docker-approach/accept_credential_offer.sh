@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Usage:
-#   ./accept_credential_offer.sh <holder_name>           # Auto-accept first pending offer
-#   ./accept_credential_offer.sh <holder_name> list      # List all pending offers
-#   ./accept_credential_offer.sh <holder_name> <cred_ex_id>  # Accept specific offer by ID
+#   ./accept_credential_offer.sh <holder_name>              # Auto-accept first credential offer
+#   ./accept_credential_offer.sh <holder_name> list         # List offers
+#   ./accept_credential_offer.sh <holder_name> <cred_ex_id> # Accept specific offer
 
 set -e
 
@@ -21,10 +21,11 @@ PORT="$AGENT_ADMIN_PORT"
 
 if [[ "$OPTION" == "list" ]]; then
   echo "[INFO] Listing credential offers for $HOLDER..."
+
   curl -s http://localhost:$PORT/issue-credential-2.0/records \
     | jq -r '
       .results[] | select(.cred_ex_record.state == "offer-received") |
-      "cred_ex_id: \(.cred_ex_record.cred_ex_id)\nthread_id: \(.cred_ex_record.thread_id)\nissuer: \(.cred_ex_record.connection_id)\n---"'
+      "cred_ex_id: \(.cred_ex_record.cred_ex_id)\nthread_id: \(.cred_ex_record.thread_id)\nissuer_connection_id: \(.cred_ex_record.connection_id)\n---"'
   exit 0
 fi
 
@@ -36,13 +37,30 @@ else
     | jq -r '.results[] | select(.cred_ex_record.state == "offer-received") | .cred_ex_record.cred_ex_id' | head -n 1)
 
   if [[ -z "$CRED_EX_ID" ]]; then
-    echo "[INFO] No pending credential offers for $HOLDER."
+    echo "[INFO] No credential offer to accept for $HOLDER"
     exit 0
   fi
 
-  echo "[INFO] Auto-selecting credential exchange ID: $CRED_EX_ID"
+  echo "[INFO] Auto-selecting credential offer: $CRED_EX_ID"
 fi
 
-echo "[INFO] Accepting offer..."
-curl -s -X POST "http://localhost:$PORT/issue-credential-2.0/records/$CRED_EX_ID/send-request" > /dev/null
-echo "[DONE] Credential request sent for $CRED_EX_ID"
+echo "[INFO] Accepting credential offer..."
+curl -s -X POST "http://localhost:$PORT/issue-credential-2.0/records/$CRED_EX_ID/send-request" \
+  -H "Content-Type: application/json" -d '{}' > /dev/null
+
+# Wait for credential to be received
+echo "[INFO] Waiting for credential to be received..."
+for i in {1..20}; do
+  STATE=$(curl -s http://localhost:$PORT/issue-credential-2.0/records/$CRED_EX_ID | jq -r '.cred_ex_record.state')
+  if [[ "$STATE" == "credential-received" ]]; then
+    echo "[INFO] Credential received. Storing it..."
+    curl -s -X POST "http://localhost:$PORT/issue-credential-2.0/records/$CRED_EX_ID/store" \
+      -H "Content-Type: application/json" -d '{}' > /dev/null
+    echo "[DONE] Credential stored successfully."
+    exit 0
+  fi
+  sleep 1
+done
+
+echo "[ERROR] Credential was not received within timeout."
+exit 1
