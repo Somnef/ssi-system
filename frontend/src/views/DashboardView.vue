@@ -27,12 +27,23 @@
         </div>
 
         <div v-else class="text-green-700 font-semibold mt-6">
-            <span v-if="user && user.role !== ''">
-                ✅ Your request has been approved. You can now access the agent.
-            </span>
-            <span v-else>
+            <div v-if="user && user.role !== ''">
+                <span>
+                    ✅ Your request has been approved. You can now access the agent.
+                </span>
+
+                <div class="mt-[2rem]"> 
+                    <a href="" class="text-blue-700 text-xl hover:underline">
+                        DOWNLOAD WALLET DATA
+                    </a>
+
+                    
+                </div>
+
+            </div>
+            <div v-else>
                 ✅ You've already submitted an agent request. Please wait for admin approval.
-            </span>
+            </div>
         </div>
     </div>
 </template>

@@ -5,6 +5,56 @@ from utils.user_store import get_users_db, get_requests_db
 from utils.agent_control import spawn_agent, register_did
 from utils.utils import next_free_port
 import os
+import zipfile
+import os
+from pathlib import Path
+
+AGENT_DIR = Path(__file__).resolve().parents[2] / "aries-agents" / "docker-approach"
+
+def create_agent_bundle(agent_name: str) -> Path:
+    bundle_path = AGENT_DIR / f"{agent_name}_bundle.zip"
+
+    paths = {
+        "env": AGENT_DIR / f"agent_envs/{agent_name}.env",
+        "did": AGENT_DIR / f"agent_dids/{agent_name}_did.json",
+        "wallet": AGENT_DIR / f"agent_wallets/{agent_name}",
+        "scripts": [
+            "accept_connection.sh",
+            "accept_credential_offer.sh",
+            "accept_proof_request.sh",
+            "accept_proof_request_interactive.sh",
+            "request_connection.sh",
+            "request_cred_def_endorsement.sh",
+            "request_proof.sh",
+            "offer_credential.sh",
+            "issue_credential.sh",
+            "get_proof_credentials.sh"
+        ]
+    }
+
+    with zipfile.ZipFile(bundle_path, 'w') as zipf:
+        # Add env and DID
+        zipf.write(paths["env"], arcname=paths["env"].name)
+        zipf.write(paths["did"], arcname=paths["did"].name)
+
+        # Add wallet folder
+        for file in paths["wallet"].rglob("*"):
+            rel_path = file.relative_to(AGENT_DIR)
+            zipf.write(file, arcname=rel_path)
+
+        # Add CLI scripts under /cli
+        for script in paths["scripts"]:
+            full_path = AGENT_DIR / script
+            if full_path.exists():
+                zipf.write(full_path, arcname=f"cli/{script}")
+
+        # Add launcher script
+        run_agent = AGENT_DIR / "run_agent.sh"
+        if run_agent.exists():
+            zipf.write(run_agent, arcname="run_agent.sh")
+
+    return bundle_path
+
 
 router = APIRouter()
 
@@ -49,5 +99,7 @@ def approve_request(data: ApproveRequestInput, user=Depends(get_current_user)):
     
     requests_db.update_request(data.username, {"status": "approved"})
     user_db.update_user(data.username, {"role": request["role"], "has_requested": "True"})
+    
+    
     
     return {"message": f"Agent spawned and registered for {data.username}"}
