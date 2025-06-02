@@ -15,10 +15,10 @@ if [[ -z "$ISSUER" || -z "$HOLDER" || -z "$CRED_DEF_ID" ]]; then
 fi
 
 # Load envs
-source "$SCRIPT_DIR/agent_envs/$ISSUER.env"
+source "$SCRIPT_DIR/../agent_envs/$ISSUER.env"
 PORT_ISSUER="$AGENT_ADMIN_PORT"
 
-source "$SCRIPT_DIR/agent_envs/$HOLDER.env"
+source "$SCRIPT_DIR/../agent_envs/$HOLDER.env"
 PORT_HOLDER="$AGENT_ADMIN_PORT"
 
 DID_ISSUER=$(curl -s http://localhost:$PORT_ISSUER/wallet/did | jq -r '.results[] | select(.posture=="posted") | .did')

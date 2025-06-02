@@ -16,7 +16,7 @@ if [[ -z "$AGENT_NAME" ]]; then
   exit 1
 fi
 
-source "$SCRIPT_DIR/agent_envs/$AGENT_NAME.env"
+source "$SCRIPT_DIR/../agent_envs/$AGENT_NAME.env"
 AGENT_PORT="$AGENT_ADMIN_PORT"
 
 if [[ "$OPTION" == "list" ]]; then

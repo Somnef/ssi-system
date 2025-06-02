@@ -13,7 +13,7 @@ if [[ -z "$HOLDER" ]]; then
   exit 1
 fi
 
-source "$SCRIPT_DIR/agent_envs/$HOLDER.env"
+source "$SCRIPT_DIR/../agent_envs/$HOLDER.env"
 PORT="$AGENT_ADMIN_PORT"
 
 PRES_EX_ID=$(curl -s http://localhost:$PORT/present-proof-2.0/records \

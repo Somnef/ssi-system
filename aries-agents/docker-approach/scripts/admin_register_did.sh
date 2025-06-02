@@ -6,8 +6,8 @@
 SCRIPT_DIR="$(dirname "$(realpath "$0")")"
 AGENT_NAME=$1
 
-ADMIN_AGENT_ENV_FILE="$SCRIPT_DIR/agent_envs/admin-agent.env"
-AGENT_ENV_FILE="$SCRIPT_DIR/agent_envs/$AGENT_NAME.env"
+ADMIN_AGENT_ENV_FILE="$SCRIPT_DIR/../agent_envs/admin-agent.env"
+AGENT_ENV_FILE="$SCRIPT_DIR/../agent_envs/$AGENT_NAME.env"
 
 
 if [ -z "$AGENT_NAME" ]; then
@@ -44,8 +44,8 @@ until curl -s http://localhost:$AGENT_ADMIN_PORT/status/ready | grep -q "ready";
 done
 
 # Create DID if not already done
-mkdir -p agent_dids
-DID_FILE="$SCRIPT_DIR/agent_dids/${AGENT_NAME}_did.json"
+mkdir -p ../agent_dids
+DID_FILE="$SCRIPT_DIR/../agent_dids/${AGENT_NAME}_did.json"
 
 if [ ! -f "$DID_FILE" ]; then
   echo "/!\ ERROR /!\ DID file $DID_FILE does not exist for agent $AGENT_NAME, please make sure the agent was setup correctly. Exiting."

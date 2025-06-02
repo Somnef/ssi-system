@@ -9,7 +9,7 @@ import zipfile
 import os
 from pathlib import Path
 
-AGENT_DIR = Path(__file__).resolve().parents[2] / "aries-agents" / "docker-approach"
+AGENT_DIR = Path(__file__).resolve().parents[2] / "aries-agents" / "docker-approach" / "scripts"
 
 def create_agent_bundle(agent_name: str) -> Path:
     bundle_path = AGENT_DIR / f"{agent_name}_bundle.zip"

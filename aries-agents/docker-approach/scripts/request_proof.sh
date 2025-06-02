@@ -15,10 +15,10 @@ if [[ -z "$VERIFIER" || -z "$HOLDER" ]]; then
 fi
 
 # Load agent envs
-source "$SCRIPT_DIR/agent_envs/$VERIFIER.env"
+source "$SCRIPT_DIR/../agent_envs/$VERIFIER.env"
 PORT_VERIFIER="$AGENT_ADMIN_PORT"
 
-source "$SCRIPT_DIR/agent_envs/$HOLDER.env"
+source "$SCRIPT_DIR/../agent_envs/$HOLDER.env"
 PORT_HOLDER="$AGENT_ADMIN_PORT"
 
 # Get posted DIDs (for connection match)

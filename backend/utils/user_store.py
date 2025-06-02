@@ -28,7 +28,10 @@ class UserStore:
         self.collection = db["users"]
 
     def get_user_by_username(self, username):
-        return self.collection.find_one({"username": username})
+        user = self.collection.find_one({"username": username})
+        if user and "has_requested" in user:
+            user["has_requested"] = True if user["has_requested"] == "True" else False
+        return user
 
     def create_user(self, user_data):
         return self.collection.insert_one(user_data).inserted_id

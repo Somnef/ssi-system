@@ -15,10 +15,10 @@ if [[ -z "$ADMIN_NAME" || -z "$AUTHOR_NAME" || -z "$AUTHOR_TXN_ID" ]]; then
 fi
 
 # Load agent configs
-source "$SCRIPT_DIR/agent_envs/$ADMIN_NAME.env"
+source "$SCRIPT_DIR/../agent_envs/$ADMIN_NAME.env"
 PORT1="$AGENT_ADMIN_PORT"
 
-source "$SCRIPT_DIR/agent_envs/$AUTHOR_NAME.env"
+source "$SCRIPT_DIR/../agent_envs/$AUTHOR_NAME.env"
 PORT2="$AGENT_ADMIN_PORT"
 
 # Get posted DIDs

@@ -16,10 +16,10 @@ if [[ -z "$AGENT_NAME" || -z "$ADMIN_NAME" || -z "$SCHEMA_ID" ]]; then
 fi
 
 # Load agent configs
-source "$SCRIPT_DIR/agent_envs/$AGENT_NAME.env"
+source "$SCRIPT_DIR/../agent_envs/$AGENT_NAME.env"
 PORT1="$AGENT_ADMIN_PORT"
 
-source "$SCRIPT_DIR/agent_envs/$ADMIN_NAME.env"
+source "$SCRIPT_DIR/../agent_envs/$ADMIN_NAME.env"
 PORT2="$AGENT_ADMIN_PORT"
 
 # Get posted DIDs

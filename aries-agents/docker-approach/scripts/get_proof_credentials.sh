@@ -14,7 +14,7 @@ if [[ -z "$HOLDER" || -z "$PRES_EX_ID" ]]; then
   exit 1
 fi
 
-source "$SCRIPT_DIR/agent_envs/$HOLDER.env"
+source "$SCRIPT_DIR/../agent_envs/$HOLDER.env"
 PORT="$AGENT_ADMIN_PORT"
 
 # Query matching credentials for each referent

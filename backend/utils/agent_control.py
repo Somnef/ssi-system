@@ -6,7 +6,7 @@ from fastapi import HTTPException
 def spawn_agent(agent_name, http_port, admin_port):
     try:
         subprocess.run(
-            ["../aries-agents/docker-approach/spawn_agent.sh", agent_name, http_port, admin_port],
+            ["../aries-agents/docker-approach/scripts/spawn_agent.sh", agent_name, http_port, admin_port],
             check=True
         )
     except subprocess.CalledProcessError as e:
@@ -15,7 +15,7 @@ def spawn_agent(agent_name, http_port, admin_port):
 def register_did(agent_name):
     try:
         subprocess.run(
-            ["../aries-agents/docker-approach/admin_register_did.sh", agent_name],
+            ["../aries-agents/docker-approach/scripts/admin_register_did.sh", agent_name],
             check=True
         )
     except subprocess.CalledProcessError as e:

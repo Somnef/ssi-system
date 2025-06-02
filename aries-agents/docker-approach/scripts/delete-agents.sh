@@ -120,7 +120,7 @@ if [[ "$reset_db" == true ]]; then
 
     (
         # conda activate ssi-app-env
-        cd $SCRIPT_DIR/../../backend
+        cd $SCRIPT_DIR/../../../backend
         python -c "from utils.user_store import reset_db; reset_db()"
     )
 

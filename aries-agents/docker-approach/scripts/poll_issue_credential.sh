@@ -12,7 +12,7 @@ if [[ -z "$ISSUER" ]]; then
   exit 1
 fi
 
-source "$SCRIPT_DIR/agent_envs/$ISSUER.env"
+source "$SCRIPT_DIR/../agent_envs/$ISSUER.env"
 PORT="$AGENT_ADMIN_PORT"
 
 echo "[INFO] Polling for credential requests to issue as $ISSUER..."

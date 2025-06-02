@@ -14,10 +14,10 @@ if [[ -z "$AGENT1" || -z "$AGENT2" ]]; then
 fi
 
 # Load agent configs
-source "$SCRIPT_DIR/agent_envs/$AGENT1.env"
+source "$SCRIPT_DIR/../agent_envs/$AGENT1.env"
 PORT1="$AGENT_ADMIN_PORT"
 
-source "$SCRIPT_DIR/agent_envs/$AGENT2.env"
+source "$SCRIPT_DIR/../agent_envs/$AGENT2.env"
 PORT2="$AGENT_ADMIN_PORT"
 
 # Get posted DIDs

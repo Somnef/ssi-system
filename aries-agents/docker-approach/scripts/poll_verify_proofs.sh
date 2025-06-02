@@ -13,7 +13,7 @@ if [[ -z "$VERIFIER" ]]; then
   exit 1
 fi
 
-source "$SCRIPT_DIR/agent_envs/$VERIFIER.env"
+source "$SCRIPT_DIR/../agent_envs/$VERIFIER.env"
 PORT="$AGENT_ADMIN_PORT"
 
 echo "[INFO] Polling proof records on $VERIFIER ($PORT)..."

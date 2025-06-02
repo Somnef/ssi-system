@@ -28,16 +28,20 @@ fi
 
 WALLET_NAME="${ADMIN_AGENT_NAME}_wallet"
 WALLET_KEY="key_${ADMIN_AGENT_NAME}"
-GENESIS_URL="http://greenlight.bcovrin.vonx.io/genesis"
+
+GENESIS_FILE="$SCRIPT_DIR/genesis.txn"
+curl http://localhost:9000/genesis -o $GENESIS_FILE
+
+# GENESIS_URL="http://greenlight.bcovrin.vonx.io/genesis"
 
 # Create directories
-mkdir -p "$SCRIPT_DIR/agent_envs" "$SCRIPT_DIR/agent_dids"
+mkdir -p "$SCRIPT_DIR/../agent_envs" "$SCRIPT_DIR/../agent_dids"
 
-mkdir -p "$SCRIPT_DIR/agent_wallets"
-chmod -R 777 "$SCRIPT_DIR/agent_wallets"
+mkdir -p "$SCRIPT_DIR/../agent_wallets"
+chmod -R 777 "$SCRIPT_DIR/../agent_wallets"
 
-mkdir -p "$SCRIPT_DIR/agent_wallets/$ADMIN_AGENT_NAME"
-chmod -R 777 "$SCRIPT_DIR/agent_wallets/$ADMIN_AGENT_NAME"
+mkdir -p "$SCRIPT_DIR/../agent_wallets/$ADMIN_AGENT_NAME"
+chmod -R 777 "$SCRIPT_DIR/../agent_wallets/$ADMIN_AGENT_NAME"
 
 # Check if HTTP_PORT is already in use
 if check_port_in_use $ADMIN_AGENT_HTTP_PORT; then
@@ -58,7 +62,7 @@ if docker ps -a --format '{{.Names}}' | grep -wq "$ADMIN_AGENT_NAME"; then
 fi
 
 # Save admin agent ports to env file
-ENV_FILE="$SCRIPT_DIR/agent_envs/${ADMIN_AGENT_NAME}.env"
+ENV_FILE="$SCRIPT_DIR/../agent_envs/${ADMIN_AGENT_NAME}.env"
 echo "AGENT_HTTP_PORT=$ADMIN_AGENT_HTTP_PORT" >"$ENV_FILE"
 echo "AGENT_ADMIN_PORT=$ADMIN_AGENT_ADMIN_PORT" >>"$ENV_FILE"
 
@@ -68,7 +72,9 @@ DOCKER_OPTIONS=(
     --name "$ADMIN_AGENT_NAME"
     -p "$ADMIN_AGENT_HTTP_PORT:$ADMIN_AGENT_HTTP_PORT"
     -p "$ADMIN_AGENT_ADMIN_PORT:8031"
-    -v "$SCRIPT_DIR/agent_wallets/$ADMIN_AGENT_NAME:/home/aries/.acapy_agent/wallet/${ADMIN_AGENT_NAME}_wallet/"
+    --network von_von
+    -v "$SCRIPT_DIR/../agent_wallets/$ADMIN_AGENT_NAME:/home/aries/.acapy_agent/wallet/${ADMIN_AGENT_NAME}_wallet/"
+    -v $GENESIS_FILE:/home/aries/genesis.txn
 )
 
 AGENT_ARGS=(
@@ -82,7 +88,8 @@ AGENT_ARGS=(
     --wallet-name $WALLET_NAME
     --wallet-key $WALLET_KEY
     --auto-provision
-    --genesis-url $GENESIS_URL
+    # --genesis-url $GENESIS_URL
+    --genesis-file /home/aries/genesis.txn
     --label $ADMIN_AGENT_NAME
     --endpoint http://host.docker.internal:$ADMIN_AGENT_HTTP_PORT
     --public-invites
@@ -101,7 +108,7 @@ done
 
 echo "Admin agent is ready."
 
-DID_FILE="$SCRIPT_DIR/agent_dids/${ADMIN_AGENT_NAME}_did.json"
+DID_FILE="$SCRIPT_DIR/../agent_dids/${ADMIN_AGENT_NAME}_did.json"
 
 # Check if DID already exists in the wallet
 EXISTING_DID=$(curl -s http://localhost:$ADMIN_AGENT_ADMIN_PORT/wallet/did | jq -r '.results[0].did // empty')
